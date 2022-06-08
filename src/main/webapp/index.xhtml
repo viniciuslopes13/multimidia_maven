@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Multimidia</title>
+</h:head>
+<h:body>
+
+	<p:panel id="basic" header="Sistema de Filtro de Imagens"
+		style="margin-bottom:20px">
+
+		<p:growl id="messages" showDetail="true" />
+		<h:form>
+			<p:fileUpload id="fileUpload" value="#{uploadMBean.uploadedFile}"
+				label="Escolher imagem" listener="#{uploadMBean.upload}"
+				allowTypes="/(\.|\/)(png)$/"
+				invalidFileMessage="Apenas é permitido imagem no formato PNG."
+				update="@this download" />
+		</h:form>
+
+		<p:panel id="download" style="margin-bottom:20px; margin-top:20px"
+			header="Arquivo para download!">
+
+			<h:form>
+
+				<p:selectOneMenu id="tipoFiltro" value="#{uploadMBean.tipoFiltro}"
+					style="width:250px" required="true" disabled="#{uploadMBean.flag}"
+					requiredMessage="Tipo: Campo Obrigatório">
+					<f:selectItem itemLabel="Escala de cinza" itemValue="1" />
+					<f:selectItem itemLabel="Negativo" itemValue="2" />
+					<f:selectItem itemLabel="Preto e branco" itemValue="3" />
+				</p:selectOneMenu>
+				<br />
+				<p:commandButton value="Download" action="#{uploadMBean.download}"
+					styleClass="ui-button-success" disabled="#{uploadMBean.flag}" />
+
+			</h:form>
+		</p:panel>
+
+	</p:panel>
+
+</h:body>
+</html>
