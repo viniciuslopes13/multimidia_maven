@@ -8,16 +8,18 @@
 	<title>Multimidia</title>
 </h:head>
 <h:body>
-
 	<p:panel id="basic" header="Sistema de Filtro de Imagens"
 		style="margin-bottom:20px">
 
-		<p:growl id="messages" showDetail="true" />
+		<p:messages id="messages" showDetail="true" closable="true">
+			<p:autoUpdate />
+		</p:messages>
+
 		<h:form>
 			<p:fileUpload id="fileUpload" value="#{uploadMBean.uploadedFile}"
 				label="Escolher imagem" listener="#{uploadMBean.upload}"
-				allowTypes="/(\.|\/)(png)$/"
-				invalidFileMessage="Apenas é permitido imagem no formato PNG."
+				allowTypes="/(\.|\/)(jpeg|jpg|png)$/"
+				invalidFileMessage="Apenas é permitido imagem no formato PNG, JPG, JPEG."
 				update="@this download" />
 		</h:form>
 
@@ -34,8 +36,12 @@
 					<f:selectItem itemLabel="Preto e branco" itemValue="3" />
 				</p:selectOneMenu>
 				<br />
-				<p:commandButton value="Download" action="#{uploadMBean.download}"
-					styleClass="ui-button-success" disabled="#{uploadMBean.flag}" />
+				<p:commandButton value="Download"
+					actionListener="#{uploadMBean.downloadArquivo}"
+					styleClass="ui-button-success" disabled="#{uploadMBean.flag}"  
+					icon="pi pi-arrow-down" update="@this download">
+					<p:fileDownload value="#{uploadMBean.streamedContent}"/>	
+				</p:commandButton>
 
 			</h:form>
 		</p:panel>
